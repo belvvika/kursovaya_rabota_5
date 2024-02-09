@@ -32,7 +32,7 @@ class DBManager:
 
         with conn:
             with conn.cursor() as cur:
-                cur.execute('select emloyers.company_name, vacancies.vacancies_name, vacancies.payment, vacancies_url from employers join vacancies using (employer_id)')
+                cur.execute('select employers.company_name, vacancies.vacancies_name, vacancies.payment, vacancies_url from employers join vacancies using (employer_id)')
                 result = cur.fetchall()
             conn.commit()
         return result
@@ -82,7 +82,7 @@ class DBManager:
 
         with conn:
             with conn.cursor() as cur:
-                cur.execute(f'select * from vacancies where lower(vacancies_name) like "%{keywords}%" or lower(vacancies_name) like "%{keywords}" or lower(vacancies_name) like "{keywords}%"')
+                cur.execute(f'select * from vacancies where vacancies_name like \'%{keywords}%\'')
                 result = cur.fetchall()
             conn.commit()
         return result

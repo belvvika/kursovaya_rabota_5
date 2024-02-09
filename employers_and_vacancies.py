@@ -7,9 +7,10 @@ def get_vacancies(employer_id):
     params = {
         'area': 1,
         'page': 0,
-        'per_page': 10
+        'per_page': 10,
+        'employer_id': employer_id
     }
-    url = f'//api.hh.ru/vacancies?employer_id={employer_id}'
+    url = f'https://api.hh.ru/vacancies'
 
     vacancies = requests.get(url, params=params).json()
 
@@ -25,7 +26,7 @@ def get_vacancies(employer_id):
         }
         if vacancy['payment'] is not None:
             data.append(vacancy)
-        return data
+    return data
 
 
 def get_employers(employer_id):
@@ -95,6 +96,7 @@ def add_table(list_employers):
     )
     with conn:
         with conn.cursor() as cur:
+            cur.execute('truncate table employers, vacancies restart identity')
 
             for employer in list_employers:
                 emp_list = get_employers(employer)
@@ -105,7 +107,7 @@ def add_table(list_employers):
                 vac_list = get_vacancies(employer)
                 for vac in vac_list:
                     cur.execute('insert into vacancies (vacancy_id, vacancies_name, payment, requirement, vacancies_url, employer_id) values (%s, %s, %s, %s, %s, %s)',
-                                (vac['vacancy_id'], vac['vacancies_name'], vac['payment'], vac['requirment'], vac['vacancies_url'], vac['employer_id']))
+                                (vac['vacancy_id'], vac['vacancies_name'], vac['payment'], vac['requirement'], vac['vacancies_url'], vac['employer_id']))
 
     conn.commit()
     conn.close()

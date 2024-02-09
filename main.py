@@ -1,8 +1,10 @@
+
 from employers_and_vacancies import table, add_table
 from DBM import DBManager
 
 def user_interaction():
-    list_employers = [9988511, 9861890, 108780, 6050637, 9020831, 3536162, 68411, 3348208, 1626611, 1694073]
+
+    list_employers = [1740, 3776, 78638, 9988511, 9020831, 3536162, 68411, 3348208, 1626611, 1694073]
     dbm = DBManager()
     table()
     add_table(list_employers)
