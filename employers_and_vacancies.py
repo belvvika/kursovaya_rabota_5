@@ -1,5 +1,6 @@
 import psycopg2
 import requests
+from config import config
 
 def get_vacancies(employer_id):
     ''' Получение вакансий по АПИ. '''
@@ -61,12 +62,8 @@ def table():
 
     conn.close()
 
-    conn = psycopg2.connect(
-        host='localhost',
-        database='hh',
-        user='postgres',
-        password='12345'
-    )
+    cfg = config('database.ini', 'postgresql')
+    conn = psycopg2.connect(**cfg)
     with conn:
         with conn.cursor() as cur:
             cur.execute('create table employers ('
@@ -83,7 +80,7 @@ def table():
                             'employer_id int references employers(employer_id))'
                         )
     conn.commit()
-    conn.close()
+
 
 def add_table(list_employers):
     ''' Заполнение таблиц. '''
@@ -110,4 +107,3 @@ def add_table(list_employers):
                                 (vac['vacancy_id'], vac['vacancies_name'], vac['payment'], vac['requirement'], vac['vacancies_url'], vac['employer_id']))
 
     conn.commit()
-    conn.close()
