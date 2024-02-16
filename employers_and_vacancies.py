@@ -48,12 +48,9 @@ def get_employers(employer_id):
 def table():
     ''' Создание базы данных и таблиц в ней. '''
 
-    conn = psycopg2.connect(
-        host='localhost',
-        database='kursovaya_rabota_5',
-        user='postgres',
-        password='12345'
-    )
+    cfg = config('database.ini', 'postgresql_01')
+    conn = psycopg2.connect(**cfg)
+
     conn.autocommit = True
     cur = conn.cursor()
 
@@ -85,12 +82,9 @@ def table():
 def add_table(list_employers):
     ''' Заполнение таблиц. '''
 
-    conn = psycopg2.connect(
-        host='localhost',
-        database='hh',
-        user='postgres',
-        password='12345'
-    )
+    cfg = config('database.ini', 'postgresql')
+    conn = psycopg2.connect(**cfg)
+
     with conn:
         with conn.cursor() as cur:
             cur.execute('truncate table employers, vacancies restart identity')

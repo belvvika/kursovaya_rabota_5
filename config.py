@@ -2,7 +2,7 @@ from configparser import ConfigParser
 def config(filename='$FILEDIR/database.ini', section='postgresql'):
 
     parser = ConfigParser()
-    parser.read(filename)
+    parser.read(filename, encoding='utf-8')
 
     db = {}
 
