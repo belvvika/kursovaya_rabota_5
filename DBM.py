@@ -1,17 +1,13 @@
 import psycopg2
-
+from config import config
 class DBManager:
     ''' Класс для подключения к базе данных. '''
 
     def get_companies_and_vacancies_count(self):
         ''' Метод, получающий список всех компаний и кол-во вакансий у каждой компании. '''
 
-        conn = psycopg2.connect(
-            host='localhost',
-            database='hh',
-            user='postgres',
-            password='12345'
-        )
+        cfg = config('database.ini', 'postgresql_01')
+        conn = psycopg2.connect(**cfg)
 
         with conn:
             with conn.cursor() as cur:
@@ -23,12 +19,8 @@ class DBManager:
     def get_all_vacancies(self):
         ''' Метод, получающий список всех вакансий с указанием названия компании, вакансии, зарплаты и ссылки. '''
 
-        conn = psycopg2.connect(
-            host='localhost',
-            database='hh',
-            user='postgres',
-            password='12345'
-        )
+        cfg = config('database.ini', 'postgresql_01')
+        conn = psycopg2.connect(**cfg)
 
         with conn:
             with conn.cursor() as cur:
@@ -40,12 +32,8 @@ class DBManager:
     def get_avg_salary(self):
         ''' Метод, получающий среднюю зарплату по вакансиям. '''
 
-        conn = psycopg2.connect(
-            host='localhost',
-            database='hh',
-            user='postgres',
-            password='12345'
-        )
+        cfg = config('database.ini', 'postgresql_01')
+        conn = psycopg2.connect(**cfg)
 
         with conn:
             with conn.cursor() as cur:
@@ -57,12 +45,8 @@ class DBManager:
     def get_vacancies_with_higher_salary(self):
         ''' Метод, получающий список всех вакансий, у которых зарплата выше средней по всем вакансиям. '''
 
-        conn = psycopg2.connect(
-            host='localhost',
-            database='hh',
-            user='postgres',
-            password='12345'
-        )
+        cfg = config('database.ini', 'postgresql_01')
+        conn = psycopg2.connect(**cfg)
 
         with conn:
             with conn.cursor() as cur:
@@ -73,12 +57,8 @@ class DBManager:
     def get_vacancies_with_keyword(self, keywords):
         ''' Метод, получающий список всех вакансий в названии которых содержатся переданные в метод слова. '''
 
-        conn = psycopg2.connect(
-            host='localhost',
-            database='hh',
-            user='postgres',
-            password='12345'
-        )
+        cfg = config('database.ini', 'postgresql_01')
+        conn = psycopg2.connect(**cfg)
 
         with conn:
             with conn.cursor() as cur:
